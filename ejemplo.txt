@@ -1,0 +1,10 @@
+name : Angel Reyes
+email : AAA@gmail.com
+telefono : 001234567
+ciudad : La Paz
+
+name : Maria Lopez
+email : maria@gmail.com
+ciudad : Cochabamba
+
+name : Juan Perez email : juan@gmail.com telefono : 007654321 ciudad : Santa Cruz

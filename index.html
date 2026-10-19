@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Formateador · TXT a CSV y Excel</title>
+<style>
+:root{font-family:Segoe UI,system-ui,sans-serif;color:#20332e;background:#f5f6f3;font-size:15px}*{box-sizing:border-box}body{margin:0}header{background:#fff;border-bottom:1px solid #e0e6e1;padding:23px 5%;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:750;font-size:19px;letter-spacing:-.5px}.badge{background:#eaf3ed;color:#23614c;border:1px solid #d5e6db;border-radius:20px;padding:7px 12px;font-size:12px}main{max-width:1300px;padding:40px 28px;margin:auto}h1{font-size:36px;letter-spacing:-1.4px;margin:0 0 12px}p{line-height:1.6;color:#64746d;margin:0 0 20px}.eyebrow{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#477b65;font-weight:700;margin-bottom:12px}.upload{background:white;border:2px dashed #bfcec2;border-radius:15px;display:flex;gap:20px;align-items:center;padding:26px;margin:28px 0 24px}.upload.drag{border-color:#167957;background:#eaf6ef}.upload-icon{border-radius:12px;background:#edf3ee;padding:16px;font-size:25px}.upload strong{display:block;margin-bottom:5px}.upload p{margin:0;font-size:13px}.filelabel,button{border:1px solid #ccd7ce;border-radius:8px;background:#fff;color:#203e31;padding:11px 17px;font:600 13px Segoe UI,system-ui,sans-serif;cursor:pointer;display:inline-block;text-align:center}.filelabel{margin-left:auto;white-space:nowrap}.primary{background:#16624c;border-color:#16624c;color:white}.primary:hover{background:#104c3a}button:disabled{opacity:.45;cursor:not-allowed}.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:22px}.card{border:1px solid #dfe5df;border-radius:13px;background:#fff;overflow:hidden}.card-head{padding:21px;border-bottom:1px solid #edf0eb}h2{font-size:16px;margin:0 0 7px}.small{font-size:12px;color:#78867d;line-height:1.55}.actions{display:flex;gap:8px;margin-top:13px}.actions button{font-size:11px;padding:7px 9px}.column-list{padding:12px;max-height:470px;overflow:auto}.column{display:flex;align-items:center;gap:10px;padding:11px 9px;cursor:pointer;border-radius:7px;word-break:break-word}.column:hover{background:#f3f6f2}input[type=checkbox]{accent-color:#16624c;width:17px;height:17px;flex-shrink:0}.column span{flex:1}.column small{color:#849087}.preview-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.count{font-size:12px;color:#477b65;background:#edf4ee;border-radius:6px;padding:6px 9px;white-space:nowrap}.table-wrap{overflow:auto;max-height:440px;min-height:230px}table{border-collapse:collapse;width:100%;text-align:left;font-size:13px;white-space:pre-wrap}th{background:#f4f7f3;color:#52695b;font-size:12px;position:sticky;top:0;white-space:nowrap}td,th{padding:13px 18px;border-bottom:1px solid #edf0eb;min-width:150px;max-width:350px;overflow-wrap:anywhere}td:first-child,th:first-child{min-width:45px;color:#87938a}tr:hover td{background:#fafcf9}.empty{text-align:center;padding:60px 25px;color:#849087;font-size:13px}.foot{display:flex;gap:18px;align-items:center;padding:18px 21px;border-top:1px solid #edf0eb}.foot button{margin-left:auto;white-space:nowrap}#status{margin-top:18px;font-size:13px;line-height:1.6;white-space:pre-wrap}#status.error{color:#ab3e35}.notice{margin-top:20px;padding:16px 19px;background:#fff9ec;border:1px solid #eadfbe;border-radius:10px;font-size:13px;color:#7c6534}.notice summary{cursor:pointer;font-weight:600}.notice ul{max-height:170px;overflow:auto;line-height:1.8;padding-left:23px}.privacy{margin-top:26px;font-size:12px;color:#8a948c}a{color:#16624c}#filename{overflow-wrap:anywhere}button:focus-visible,.filelabel:focus-within{outline:3px solid #86baa2;outline-offset:3px}.hidden{display:none!important}@media(max-width:760px){main{padding:27px 16px}h1{font-size:29px}.layout{grid-template-columns:1fr}.upload{flex-wrap:wrap;padding:20px}.filelabel{margin-left:0}.column-list{max-height:220px}.foot{flex-wrap:wrap}.foot button{width:100%}header{padding:19px}.badge{font-size:10px}}
+.foot{flex-wrap:wrap}.export-actions{display:flex;gap:9px;margin-left:auto;flex-wrap:wrap}.export-actions button{margin-left:0}.import-help{padding:0 21px 18px;color:#64746d;font-size:12px;line-height:1.6}@media(max-width:760px){.export-actions{width:100%}.export-actions button{flex:1}}
+</style>
+<style>
+.column{cursor:default;gap:7px}.column-select{display:flex;align-items:center;gap:8px;flex:1;min-width:0;cursor:pointer}.column-select span{min-width:0}.move-controls{display:flex;gap:4px;flex-shrink:0}.move-controls button{padding:4px 6px;min-width:27px;font-size:14px}.move-controls button:hover:not(:disabled){background:#e6f0e9}
+</style>
+</head>
+<body>
+<header><div class="brand">▤ &nbsp;Formateador</div><span class="badge">● Procesamiento local</span></header>
+<main>
+<div class="eyebrow">Tus datos, en orden</div>
+<h1>De texto a CSV o Excel, sin copiar y pegar.</h1>
+<p>Carga tu archivo, revisa los datos y elige las columnas que quieres exportar.</p>
+<section class="upload" id="dropzone" aria-label="Cargar archivo TXT">
+<div class="upload-icon" aria-hidden="true">↥</div><div><strong id="filename">Arrastra aquí tu archivo TXT</strong><p id="filedetail">Hasta 20 MB · UTF-8, UTF-16 con BOM o Windows-1252</p></div>
+<label class="filelabel">Elegir archivo<input id="file" type="file" accept=".txt,text/plain" style="position:absolute;width:1px;height:1px;opacity:0"></label>
+</section>
+<div class="layout">
+<aside class="card"><div class="card-head"><h2>Columnas para exportar</h2><div class="small">Desmarca las que no quieras incluir.<br>Usa ← → para cambiar su posición.<br>El orden de esta lista es el de la tabla.</div><div class="actions"><button id="all" disabled>Seleccionar todas</button><button id="none" disabled>Desmarcar todas</button></div></div><div class="column-list" id="columns"><div class="empty">Las columnas aparecerán al cargar tu archivo.</div></div></aside>
+<section class="card"><div class="card-head preview-head"><div><h2>Vista previa</h2><div class="small" id="preview-note">Comprueba el resultado antes de exportar.</div></div><span class="count" id="count">0 registros</span></div><div class="table-wrap" id="preview"><div class="empty">Tu tabla aparecerá aquí.<br><br><button id="example">Probar con un ejemplo</button></div></div><div class="foot"><div class="small" id="selection">Ningún archivo cargado</div><div class="export-actions"><button class="primary" id="export-csv" disabled>Descargar CSV ↓</button><button id="export" disabled>Excel · todo como texto ↓</button></div></div><div class="import-help"><strong>Para conservar tus datos:</strong> Excel guarda todas las celdas como texto. CSV guarda los valores, pero no puede fijar el tipo de celda al abrirlo.<details style="margin-top:8px" open><summary>Importar CSV en Google Sheets sin cambiar valores</summary><ol><li>En Sheets, usa Archivo → Importar → Subir y selecciona el CSV.</li><li>Elige Coma como separador y desmarca «Convertir texto en números, fechas y fórmulas».</li><li>Importa el archivo. Los ceros iniciales, números largos y valores como 01/02 se conservarán como texto.</li></ol>Si ya se convirtieron los datos, importa de nuevo el archivo original; cambiar el formato después no recupera los dígitos perdidos. Las comillas que veas al abrir el CSV en un editor delimitan los campos y se procesan al importarlo.</details>Ambos formatos incluyen todas las filas y solo las columnas seleccionadas, en el orden elegido.</div></section>
+</div>
+<details id="warnings" class="notice hidden"><summary id="warning-title"></summary><div class="small" id="rules" style="margin-top:10px"></div><ul id="warning-list"></ul></details>
+<div id="status" role="status" aria-live="polite"></div>
+<div class="privacy">Tus archivos se procesan en esta computadora. No se envían a servicios externos.</div>
+</main>
+<script>
+const token='__TOKEN__';
+const $=id=>document.getElementById(id);
+let dataset=null, selected=new Set(), columnOrder=[], sourceName='datos', loading=false, exporting=false;
+const example='name : Angel Reyes\nemail : AAA@gmail.com\ntelefono : 001234567\nciudad : La Paz\n\nname : Maria Lopez\nemail : maria@gmail.com\nciudad : Cochabamba\n\nname : Juan Perez\nemail : juan@gmail.com\ntelefono : 007654321\nciudad : Santa Cruz';
+function status(message,error=false){$('status').textContent=message;$('status').className=error?'error':'';}
+function refreshButtons(){ $('export').disabled=$('export-csv').disabled=!dataset||!selected.size||loading||exporting; $('all').disabled=$('none').disabled=!dataset||loading; }
+function selectedColumns(){return columnOrder.filter(c=>selected.has(c));}
+function moveColumn(name,direction){
+ if(loading||exporting)return;
+ const index=columnOrder.indexOf(name),target=index+direction;
+ if(index<0||target<0||target>=columnOrder.length)return;
+ [columnOrder[index],columnOrder[target]]=[columnOrder[target],columnOrder[index]];
+ render(name,direction);
+ status(`«${name}» ahora está en la posición ${target+1}. Se usará este orden en CSV y Excel.`);
+}
+function render(focusName=null,focusDirection=null){
+ const cols=selectedColumns(),scroll=$('columns').scrollTop;
+ let focusTarget=null;
+ $('columns').replaceChildren();
+ for(const [index,name] of columnOrder.entries()){
+  const item=document.createElement('div');item.className='column';
+  const label=document.createElement('label');label.className='column-select';
+  const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=selected.has(name);
+  checkbox.addEventListener('change',()=>{checkbox.checked?selected.add(name):selected.delete(name);render(name);});
+  const span=document.createElement('span');span.textContent=name;
+  const count=document.createElement('small');count.textContent=dataset.rows.filter(r=>r[name]!==undefined&&r[name]!=='').length;
+  label.append(checkbox,span,count);item.append(label);
+  const controls=document.createElement('div');controls.className='move-controls';
+  if(name===focusName)focusTarget=checkbox;
+  for(const [direction,symbol,description] of [[-1,'←','izquierda'],[1,'→','derecha']]){
+   const button=document.createElement('button');button.type='button';button.textContent=symbol;
+   button.title=`Mover ${name} a la ${description}`;button.setAttribute('aria-label',button.title);
+   button.disabled=direction===-1?index===0:index===columnOrder.length-1;
+   button.addEventListener('click',()=>moveColumn(name,direction));controls.append(button);
+   if(name===focusName&&direction===focusDirection&&!button.disabled)focusTarget=button;
+  }
+  item.append(controls);$('columns').append(item);
+ }
+ $('columns').scrollTop=scroll;
+ if(focusTarget)focusTarget.focus({preventScroll:true});
+ $('count').textContent=`${dataset.rows.length.toLocaleString('es')} registros`;
+ $('selection').textContent=`${cols.length} de ${dataset.columns.length} columnas seleccionadas`;
+ $('preview-note').textContent=dataset.rows.length>100?'Mostrando las primeras 100 filas. La descarga incluirá todos los registros.':'Se exportarán todas las filas con las columnas seleccionadas.';
+ $('preview').replaceChildren();
+ if(!cols.length){const empty=document.createElement('div');empty.className='empty';empty.textContent='Selecciona al menos una columna para ver y exportar tus datos.';$('preview').append(empty);}
+ else{
+  const table=document.createElement('table'),head=document.createElement('thead'),body=document.createElement('tbody'),hr=document.createElement('tr');
+  for(const title of ['#',...cols]){const th=document.createElement('th');th.scope='col';th.textContent=title;hr.append(th);}head.append(hr);
+  dataset.rows.slice(0,100).forEach((row,i)=>{const tr=document.createElement('tr');for(const value of [i+1,...cols.map(c=>row[c]??'')]){const td=document.createElement('td');td.textContent=value;tr.append(td);}body.append(tr);});
+  table.append(head,body);$('preview').append(table);
+ }
+ refreshButtons();
+}
+async function parse(file){
+ if(loading||exporting)return;
+ if(file.size>20*1024*1024){status('El archivo supera los 20 MB.',true);return;}
+ if(!file.name.toLowerCase().endsWith('.txt')){status('Selecciona un archivo con extensión .txt.',true);return;}
+ loading=true;refreshButtons();status('Leyendo el archivo y detectando columnas…');
+ try{
+  const response=await fetch('/api/parse',{method:'POST',headers:{'X-Local-Token':token},body:file});
+  const result=await response.json();if(!response.ok)throw Error(result.error);
+  dataset=result;columnOrder=[...dataset.columns];selected=new Set(dataset.columns);sourceName=file.name.replace(/\.txt$/i,'');
+  $('filename').textContent=file.name;$('filedetail').textContent=`${(file.size/1024).toFixed(1)} KB · ${result.encoding} · Archivo cargado`;
+  $('warnings').classList.toggle('hidden',!result.warnings.length);$('warnings').open=false;
+  $('warning-title').textContent=`${result.warnings.length} observaciones de lectura — revisar`;$('rules').textContent=result.note;
+  $('warning-list').replaceChildren();for(const warning of result.warnings.slice(0,200)){const li=document.createElement('li');li.textContent=warning;$('warning-list').append(li);}
+  if(result.warnings.length>200){const li=document.createElement('li');li.textContent='Se muestran las primeras 200 observaciones.';$('warning-list').append(li);}
+  render();status('Archivo listo. Ajusta las columnas y descarga tu CSV o Excel.');
+ }catch(error){status(error.message||'No se pudo leer el archivo.',true);}
+ finally{loading=false;refreshButtons();$('file').value='';}
+}
+$('file').addEventListener('change',e=>{if(e.target.files[0])parse(e.target.files[0]);});
+$('example').addEventListener('click',()=>parse(new File([example],'ejemplo.txt',{type:'text/plain'})));
+$('all').addEventListener('click',()=>{selected=new Set(dataset.columns);render();});
+$('none').addEventListener('click',()=>{selected.clear();render();});
+for(const event of ['dragenter','dragover'])$('dropzone').addEventListener(event,e=>{e.preventDefault();$('dropzone').classList.add('drag');});
+for(const event of ['dragleave','drop'])$('dropzone').addEventListener(event,e=>{e.preventDefault();$('dropzone').classList.remove('drag');});
+$('dropzone').addEventListener('drop',e=>{if(e.dataTransfer.files.length>1){status('Carga un archivo TXT a la vez.',true);return;}if(e.dataTransfer.files[0])parse(e.dataTransfer.files[0]);});
+async function exportFile(format){
+ if(!dataset||!selected.size||loading||exporting)return;
+ const label=format==='csv'?'CSV':'Excel';
+ exporting=true;refreshButtons();status(`Preparando tu ${label}…`);
+ try{
+  const response=await fetch('/api/export',{method:'POST',headers:{'Content-Type':'application/json','X-Local-Token':token},body:JSON.stringify({format,columns:selectedColumns(),rows:dataset.rows})});
+  if(!response.ok){const error=await response.json();throw Error(error.error);}
+  const blob=await response.blob(),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=sourceName+'.'+format;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);
+  status(format==='csv'?'CSV generado. En Google Sheets, impórtalo con separador Coma y desmarca «Convertir texto en números, fechas y fórmulas».':'Excel generado con todas las celdas como texto. Revisa las descargas de tu navegador.');
+ }catch(error){status(error.message||'No se pudo generar el archivo.',true);}
+ finally{exporting=false;refreshButtons();}
+}
+$('export-csv').addEventListener('click',()=>exportFile('csv'));
+$('export').addEventListener('click',()=>exportFile('xlsx'));
+</script>
+</body></html>
